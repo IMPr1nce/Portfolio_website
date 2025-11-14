@@ -1,4 +1,10 @@
 /* ===== Inventory Page Styles ===== */
+body {
+    font-family: Arial, sans-serif;
+    background-color: black;
+    margin: 0;
+    padding: 20px;
+}
 input:focus {
     outline: none;
     border-color: #4CAF50;
@@ -12,7 +18,7 @@ input:focus {
 
 /* Home button */
 #home {
-    background-color: #2196F3;
+    background-color: red;
     color: white;
 }
 /* Total display */
