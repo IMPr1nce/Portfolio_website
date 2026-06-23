@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prince Patel — Portfolio</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0d;
+      --surface: #141414;
+      --border: #222;
+      --accent: #7c6af7;
+      --accent2: #56cfbf;
+      --text: #e8e8e8;
+      --muted: #888;
+      --tag-bg: #1e1b3a;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      line-height: 1.65;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      height: 56px;
+      background: rgba(13,13,13,0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .logo { font-weight: 700; font-size: 1.05rem; color: var(--accent); letter-spacing: .5px; }
+    nav ul { list-style: none; display: flex; gap: 1.8rem; }
+    nav a { text-decoration: none; color: var(--muted); font-size: .9rem; transition: color .2s; }
+    nav a:hover { color: var(--text); }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 0 4rem; }
+    .container { max-width: 860px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      background: radial-gradient(ellipse at 60% 40%, #1a1440 0%, var(--bg) 65%);
+    }
+    #hero .container { display: flex; flex-direction: column; gap: 1.2rem; }
+    .hero-eyebrow { font-size: .85rem; color: var(--accent2); letter-spacing: 2px; text-transform: uppercase; }
+    .hero-name { font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 800; line-height: 1.1; }
+    .hero-name span { color: var(--accent); }
+    .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 520px; }
+    .hero-links { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: .4rem; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .45rem;
+      padding: .55rem 1.25rem;
+      border-radius: 8px;
+      font-size: .88rem; font-weight: 600;
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+    .btn:hover { opacity: .8; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-outline { border: 1px solid var(--border); color: var(--text); background: transparent; }
+
+    /* ── HEADINGS ── */
+    .section-label {
+      font-size: .78rem; color: var(--accent2); letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: .5rem;
+    }
+    h2 { font-size: 1.9rem; font-weight: 700; margin-bottom: 2rem; }
+
+    /* ── ABOUT ── */
+    #about p { color: var(--muted); max-width: 680px; font-size: 1.02rem; }
+
+    /* ── EDUCATION ── */
+    .edu-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 1.8rem;
+    }
+    .edu-card h3 { font-size: 1.05rem; }
+    .edu-card .degree { color: var(--accent); font-weight: 600; margin-top: .2rem; }
+    .edu-card .meta { color: var(--muted); font-size: .88rem; margin-top: .25rem; }
+    .edu-card .courses { margin-top: .8rem; font-size: .85rem; color: var(--muted); }
+
+    /* ── SKILLS ── */
+    .skills-grid { display: flex; flex-wrap: wrap; gap: .55rem; }
+    .tag {
+      background: var(--tag-bg);
+      border: 1px solid #2e2a5a;
+      color: var(--accent);
+      font-size: .8rem; font-weight: 500;
+      padding: .3rem .75rem;
+      border-radius: 6px;
+    }
+    .tag.lib { background: #0e2020; border-color: #1a3a3a; color: var(--accent2); }
+
+    /* ── EXPERIENCE ── */
+    .exp-list { display: flex; flex-direction: column; gap: 1.5rem; }
+    .exp-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem 1.8rem;
+    }
+    .exp-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: .4rem; }
+    .exp-header h3 { font-size: 1rem; }
+    .exp-org { color: var(--accent); font-size: .9rem; font-weight: 600; }
+    .exp-date { font-size: .82rem; color: var(--muted); white-space: nowrap; }
+    .exp-card ul { margin-top: .9rem; padding-left: 1.2rem; display: flex; flex-direction: column; gap: .4rem; }
+    .exp-card li { color: var(--muted); font-size: .9rem; }
+    .exp-card li strong { color: var(--text); }
+
+    /* ── PROJECTS ── */
+    .proj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 1.25rem; }
+    .proj-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.4rem 1.5rem;
+      display: flex; flex-direction: column; gap: .6rem;
+      transition: border-color .2s;
+    }
+    .proj-card:hover { border-color: var(--accent); }
+    .proj-card h3 { font-size: .98rem; }
+    .proj-card p { color: var(--muted); font-size: .86rem; flex: 1; }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .proj-tag {
+      background: #1a1a2e; border: 1px solid #2a2a4a; color: var(--accent);
+      font-size: .75rem; padding: .2rem .6rem; border-radius: 5px;
+    }
+
+    /* ── CONTACT ── */
+    #contact { text-align: center; }
+    #contact .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 1.8rem;
+      font-size: .82rem;
+      color: var(--muted);
+    }
+
+    /* ── DIVIDER ── */
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="logo">PP</span>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <p class="hero-eyebrow">Hey, I'm</p>
+    <h1 class="hero-name">Prince <span>Patel</span></h1>
+    <p class="hero-sub">
+      CS &amp; Data Science student at UTSA · Software Engineer · Researcher ·
+      Building things at the intersection of systems, ML, and data.
+    </p>
+    <div class="hero-links">
+      <a class="btn btn-primary" href="mailto:ppatel9114@gmail.com">✉ Get in touch</a>
+      <a class="btn btn-outline" href="https://github.com" target="_blank">GitHub</a>
+      <a class="btn btn-outline" href="https://linkedin.com" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ABOUT / EDUCATION -->
+<section id="about">
+  <div class="container">
+    <p class="section-label">Background</p>
+    <h2>About Me</h2>
+    <p>
+      I'm a junior at the <strong>University of Texas at San Antonio</strong> double-majoring in
+      Computer Science and Data Science (3.96 GPA) with a minor in Mathematics.
+      I care about writing clean, performant code and turning messy data into something useful.
+      Outside of class I've worked as a software engineering intern, an ML researcher, and a TA
+      — and I'm always looking for the next hard problem.
+    </p>
+
+    <br />
+
+    <div class="edu-card" style="margin-top: 1rem;">
+      <h3>University of Texas at San Antonio</h3>
+      <p class="degree">B.S. Computer Science &amp; B.S. Data Science — GPA 3.96 / 4.0</p>
+      <p class="meta">San Antonio, TX · Expected May 2027 · Minor: Mathematics</p>
+      <p class="courses">
+        <strong>Relevant courses:</strong> Computer Architecture · Software Engineering · Databases ·
+        Data Science · Application Programming · Data Structures &amp; Algorithms · Operating Systems
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <p class="section-label">Toolkit</p>
+    <h2>Skills</h2>
+    <p style="color:var(--muted); font-size:.85rem; margin-bottom:.9rem;">Languages</p>
+    <div class="skills-grid">
+      <span class="tag">Java</span>
+      <span class="tag">Python</span>
+      <span class="tag">C++</span>
+      <span class="tag">C</span>
+      <span class="tag">JavaScript</span>
+      <span class="tag">SQL</span>
+      <span class="tag">HTML / CSS</span>
+      <span class="tag">R</span>
+      <span class="tag">MATLAB</span>
+      <span class="tag">Bash</span>
+      <span class="tag">Linux</span>
+    </div>
+    <p style="color:var(--muted); font-size:.85rem; margin: 1.1rem 0 .9rem;">Libraries &amp; Frameworks</p>
+    <div class="skills-grid">
+      <span class="tag lib">TensorFlow</span>
+      <span class="tag lib">PyTorch</span>
+      <span class="tag lib">NumPy</span>
+      <span class="tag lib">Pandas</span>
+      <span class="tag lib">Matplotlib</span>
+      <span class="tag lib">Gammapy</span>
+      <span class="tag lib">Astropy</span>
+      <span class="tag lib">scikit-learn</span>
+      <span class="tag lib">MongoDB</span>
+      <span class="tag lib">Node.js</span>
+      <span class="tag lib">Terraform</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <p class="section-label">Work</p>
+    <h2>Experience</h2>
+    <div class="exp-list">
+
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <h3>Software Engineer Intern — Gamma Ray Astronomy Team</h3>
+            <p class="exp-org">Temple University</p>
+          </div>
+          <span class="exp-date">Jun 2025 – Aug 2025</span>
+        </div>
+        <ul>
+          <li>Designed a search algorithm querying multiple astrophysical catalogs simultaneously, <strong>cutting source identification time by 50%+</strong>.</li>
+          <li>Conducted multi-wavelength morphology analysis of Supernova Remnant W28 using Fermi telescope data.</li>
+          <li>Built automated Python pipelines with Gammapy &amp; Astropy for FITS-to-image conversion across diverse energy bands.</li>
+          <li>Improved data reproducibility and analysis efficiency by <strong>20%</strong> via modular design and automated logging.</li>
+          <li>Presented research to <strong>200+ students</strong>, communicating ML and astrophysics concepts to inspire STEM interest.</li>
+        </ul>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <h3>Undergraduate Researcher — Data Science Fellowship</h3>
+            <p class="exp-org">LUCENT Lab for Emerging Nano Technologies, UTSA</p>
+          </div>
+          <span class="exp-date">Jan 2025 – Aug 2025</span>
+        </div>
+        <ul>
+          <li>Built a heterogeneous computing cluster with <strong>24 Raspberry Pi + 8 NVIDIA Orin + 8 PYNQ boards</strong> for distributed algorithm testing.</li>
+          <li>Achieved <strong>10% performance improvement</strong> in large-scale simulations via CUDA PyTorch task distribution.</li>
+          <li>Designed the cluster as a local server for customizable hardware-specific algorithm benchmarking.</li>
+          <li>Developed and maintained the LUCENT Lab website, <strong>improving lab visibility by 30%</strong>.</li>
+        </ul>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <h3>Teaching Assistant</h3>
+            <p class="exp-org">University of Texas at San Antonio</p>
+          </div>
+          <span class="exp-date">Jan 2025 – Present</span>
+        </div>
+        <ul>
+          <li>Support <strong>100+ undergrads</strong> in Computer Organization and Discrete Mathematics.</li>
+          <li>Simplify Boolean algebra, digital logic design, combinatorics, and graph theory during weekly office hours.</li>
+          <li>Contributed to a <strong>15% improvement in average student exam scores</strong> through individualized guidance.</li>
+          <li>Co-developed review materials and sample problems with the course instructor.</li>
+        </ul>
+      </div>
+
+      <div class="exp-card">
+        <div class="exp-header">
+          <div>
+            <h3>Machine Learning Intern — Summer Research Program</h3>
+            <p class="exp-org">Temple University</p>
+          </div>
+          <span class="exp-date">Jun 2024 – Aug 2024</span>
+        </div>
+        <ul>
+          <li>Built a logistic regression model with scikit-learn to predict heart disease from patient data.</li>
+          <li>Enhanced feature selection with regularization to improve predictor differentiation.</li>
+          <li>Optimized gradient descent, achieving a <strong>5% reduction in loss function value</strong>.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <p class="section-label">Built</p>
+    <h2>Projects</h2>
+    <div class="proj-grid">
+
+      <div class="proj-card">
+        <h3>Rowdy Experience</h3>
+        <p>Android app to boost UTSA student engagement via interactive checklists and a badge/trophy reward system across Food, Sports, Nightlife, and Activities categories.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Java</span>
+          <span class="proj-tag">Android</span>
+          <span class="proj-tag">UML</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <h3>Cache &amp; Virtual Memory Simulator</h3>
+        <p>Python simulator implementing FIFO/LRU cache replacement policies and virtual-to-physical memory translation with multi-process support. Generates detailed hit/miss, CPI, and utilization reports.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">Python</span>
+          <span class="proj-tag">Systems</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <h3>Blackjack Game</h3>
+        <p>Fully-featured Blackjack game in C with file-based save/resume, dealer AI, and modular design for structured gameplay management.</p>
+        <div class="proj-tags">
+          <span class="proj-tag">C</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <p class="section-label">Say hello</p>
+    <h2>Get In Touch</h2>
+    <p style="color:var(--muted);">Open to internships, research collaborations, and interesting side projects.</p>
+    <div class="contact-links">
+      <a class="btn btn-primary" href="mailto:ppatel9114@gmail.com">ppatel9114@gmail.com</a>
+      <a class="btn btn-outline" href="tel:3605837957">(360) 583-7957</a>
+      <a class="btn btn-outline" href="https://github.com" target="_blank">GitHub</a>
+      <a class="btn btn-outline" href="https://linkedin.com" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Prince Patel · Built from scratch</p>
+</footer>
+
+</body>
+</html>
