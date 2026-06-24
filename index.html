@@ -445,26 +445,17 @@
       Drop a note — whether it's about a project, an opportunity, or just to say hi.
       I read every message.
     </p>
-    <form class="msg-form" id="msgForm">
+    <form class="msg-form" id="msgForm"
+          action="https://formspree.io/f/YOUR_FORM_ID"
+          method="POST">
       <div class="msg-row">
-        <input type="text"  id="msg-name"    placeholder="Your name *"  required maxlength="100" />
-        <input type="email" id="msg-email"   placeholder="Email (optional)" maxlength="200" />
+        <input type="text"  name="name"    placeholder="Your name *"  required maxlength="100" />
+        <input type="email" name="email"   placeholder="Email (optional)" maxlength="200" />
       </div>
-      <textarea id="msg-body" placeholder="Your message *" required maxlength="2000"></textarea>
+      <textarea name="message" placeholder="Your message *" required maxlength="2000"></textarea>
       <p id="msg-status"></p>
       <button class="btn btn-primary msg-submit" type="submit" id="msgBtn">Send Message</button>
     </form>
-  </div>
-</section>
-
-<hr class="divider" />
-
-<!-- MESSAGES (admin view — toggle with ?admin=1) -->
-<section id="messages">
-  <div class="container">
-    <p class="section-label">Inbox</p>
-    <h2>Messages</h2>
-    <div class="msg-list" id="msgList"><p style="color:var(--muted)">Loading…</p></div>
   </div>
 </section>
 
@@ -475,12 +466,9 @@
 </footer>
 
 <script>
-  const API = 'http://localhost:5000/api/messages';
-
-  // ── Submit form ──
   document.getElementById('msgForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const btn = document.getElementById('msgBtn');
+    const btn    = document.getElementById('msgBtn');
     const status = document.getElementById('msg-status');
     btn.disabled = true;
     btn.textContent = 'Sending…';
@@ -488,22 +476,17 @@
     status.textContent = '';
 
     try {
-      const res = await fetch(API, {
+      const res = await fetch(e.target.action, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name:    document.getElementById('msg-name').value.trim(),
-          email:   document.getElementById('msg-email').value.trim(),
-          message: document.getElementById('msg-body').value.trim(),
-        }),
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(e.target),
       });
       if (res.ok) {
         status.className = 'ok';
         status.textContent = '✓ Message sent! Thanks for reaching out.';
         e.target.reset();
       } else {
-        const data = await res.json();
-        throw new Error(data.error || 'Something went wrong.');
+        throw new Error('Something went wrong — please try again.');
       }
     } catch (err) {
       status.className = 'err';
@@ -513,30 +496,6 @@
       btn.textContent = 'Send Message';
     }
   });
-
-  // ── Admin inbox view (?admin=1) ──
-  if (new URLSearchParams(location.search).get('admin') === '1') {
-    const section = document.getElementById('messages');
-    section.classList.add('visible');
-    fetch(API).then(r => r.json()).then(msgs => {
-      const list = document.getElementById('msgList');
-      if (!msgs.length) { list.innerHTML = '<p style="color:var(--muted)">No messages yet.</p>'; return; }
-      list.innerHTML = [...msgs].reverse().map(m => `
-        <div class="msg-item">
-          <div class="msg-item-header">
-            <span class="msg-item-name">${esc(m.name)}${m.email ? ` &lt;${esc(m.email)}&gt;` : ''}</span>
-            <span class="msg-item-meta">${new Date(m.timestamp).toLocaleString()}</span>
-          </div>
-          <p class="msg-item-body">${esc(m.message)}</p>
-        </div>`).join('');
-    }).catch(() => {
-      document.getElementById('msgList').innerHTML = '<p style="color:#f87171">Could not load messages — is the backend running?</p>';
-    });
-  }
-
-  function esc(s) {
-    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  }
 </script>
 </body>
 </html>
