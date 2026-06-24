@@ -466,6 +466,9 @@
 </footer>
 
 <script>
+  // Local dev → Flask backend. GitHub Pages → swap to Formspree URL below.
+  const BACKEND_URL = 'http://localhost:8080/api/messages';
+
   document.getElementById('msgForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn    = document.getElementById('msgBtn');
@@ -475,18 +478,26 @@
     status.className = '';
     status.textContent = '';
 
+    const fd = new FormData(e.target);
+    const payload = {
+      name:    fd.get('name').trim(),
+      email:   fd.get('email').trim(),
+      message: fd.get('message').trim(),
+    };
+
     try {
-      const res = await fetch(e.target.action, {
+      const res = await fetch(BACKEND_URL, {
         method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: new FormData(e.target),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       });
+      const data = await res.json().catch(() => ({}));
       if (res.ok) {
         status.className = 'ok';
         status.textContent = '✓ Message sent! Thanks for reaching out.';
         e.target.reset();
       } else {
-        throw new Error('Something went wrong — please try again.');
+        throw new Error(data.error || 'Something went wrong — please try again.');
       }
     } catch (err) {
       status.className = 'err';
