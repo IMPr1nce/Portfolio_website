@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="neu">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Prince Patel — Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="css/themes.css" />
+  <link rel="stylesheet" href="css/base.css" />
 </head>
 <body>
 
@@ -32,8 +33,8 @@
     </p>
     <div class="hero-links">
       <a class="btn btn-primary" href="mailto:ppatel9114@gmail.com">✉ Get in touch</a>
-      <a class="btn btn-outline" href="https://github.com" target="_blank">GitHub</a>
-      <a class="btn btn-outline" href="https://linkedin.com" target="_blank">LinkedIn</a>
+      <a class="btn" href="https://github.com" target="_blank">GitHub</a>
+      <a class="btn" href="https://linkedin.com" target="_blank">LinkedIn</a>
     </div>
   </div>
 </section>
@@ -232,9 +233,9 @@
     <p style="color:var(--muted);">Open to internships, research collaborations, and interesting side projects.</p>
     <div class="contact-links">
       <a class="btn btn-primary" href="mailto:ppatel9114@gmail.com">ppatel9114@gmail.com</a>
-      <a class="btn btn-outline" href="tel:3605837957">(360) 583-7957</a>
-      <a class="btn btn-outline" href="https://github.com" target="_blank">GitHub</a>
-      <a class="btn btn-outline" href="https://linkedin.com" target="_blank">LinkedIn</a>
+      <a class="btn" href="tel:3605837957">(360) 583-7957</a>
+      <a class="btn" href="https://github.com" target="_blank">GitHub</a>
+      <a class="btn" href="https://linkedin.com" target="_blank">LinkedIn</a>
     </div>
   </div>
 </section>
@@ -281,6 +282,13 @@
   <p>© 2026 Prince Patel · Built from scratch</p>
 </footer>
 
-<script src="main.js"></script>
+<!-- THEME TOGGLE -->
+<button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+  <span class="theme-toggle-icon" id="themeIcon">✦</span>
+  <span id="themeLabel">Glass</span>
+</button>
+
+<script src="js/theme.js"></script>
+<script src="js/form.js"></script>
 </body>
 </html>
