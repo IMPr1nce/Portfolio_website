@@ -1,7 +1,7 @@
-// Local dev → Flask backend. GitHub Pages → swap to your Formspree URL.
+// Local dev: Flask backend. GitHub Pages: swap to your Formspree URL.
 const BACKEND_URL = 'http://localhost:8080/api/messages';
 
-// ── Contact form submission ──
+// ── Contact form ──
 document.getElementById('msgForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   const btn    = document.getElementById('msgBtn');
@@ -20,7 +20,7 @@ document.getElementById('msgForm').addEventListener('submit', async (e) => {
   };
 
   try {
-    const res = await fetch(BACKEND_URL, {
+    const res  = await fetch(BACKEND_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),

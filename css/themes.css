@@ -1,0 +1,71 @@
+/* ════════════════════════════════════════
+   NEUMORPHISM
+   ════════════════════════════════════════ */
+[data-theme="neu"] {
+  --surface:     #e0e5ec;
+  --text:        #31344b;
+  --muted:       #6b7280;
+  --accent:      #6c63ff;
+  --accent2:     #00b4a6;
+  --border:      transparent;
+  --placeholder: #a0aec0;
+  --divider:     linear-gradient(to right, transparent, #a3b1c6, transparent);
+
+  --shadow-d:  #a3b1c6;
+  --shadow-l:  #ffffff;
+  --raise:     6px 6px 14px var(--shadow-d), -6px -6px 14px var(--shadow-l);
+  --raise-sm:  4px 4px 10px var(--shadow-d), -4px -4px 10px var(--shadow-l);
+  --inset:     inset 4px 4px 10px var(--shadow-d), inset -4px -4px 10px var(--shadow-l);
+}
+
+[data-theme="neu"] body       { background: #e0e5ec; }
+[data-theme="neu"] nav        { background: #e0e5ec; box-shadow: 0 4px 12px #a3b1c6, 0 -2px 6px #fff; }
+[data-theme="neu"] footer     { box-shadow: 0 -4px 12px #a3b1c6; }
+[data-theme="neu"] .btn-primary { box-shadow: 4px 4px 10px #5248cc, -2px -2px 8px #9b94ff; }
+[data-theme="neu"] .btn-primary:hover { box-shadow: inset 3px 3px 8px #4840b8, inset -2px -2px 6px #8880f0; opacity: 1; }
+
+
+/* ════════════════════════════════════════
+   GLASSMORPHISM
+   ════════════════════════════════════════ */
+[data-theme="glass"] {
+  --surface:     rgba(255, 255, 255, 0.1);
+  --text:        #f0f4ff;
+  --muted:       rgba(255, 255, 255, 0.6);
+  --accent:      #a78bfa;
+  --accent2:     #34d399;
+  --border:      rgba(255, 255, 255, 0.18);
+  --placeholder: rgba(255, 255, 255, 0.35);
+  --divider:     linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);
+
+  --raise:    0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.12);
+  --raise-sm: 0 4px 16px rgba(0,0,0,0.2),  inset 0 1px 0 rgba(255,255,255,0.1);
+  --inset:    inset 0 2px 12px rgba(0,0,0,0.25);
+}
+
+[data-theme="glass"] body {
+  background: linear-gradient(135deg, #1a0533 0%, #0d1b4b 45%, #0a3d62 75%, #0b5e4a 100%) fixed;
+}
+[data-theme="glass"] nav {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+[data-theme="glass"] .neu-card {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+[data-theme="glass"] footer {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+[data-theme="glass"] .theme-toggle {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+[data-theme="glass"] nav a:hover { box-shadow: none; background: rgba(255,255,255,0.08); }
+[data-theme="glass"] nav .logo   { box-shadow: 0 0 0 1px rgba(255,255,255,0.15); }
