@@ -178,6 +178,35 @@ footer { text-align: center; padding: 2rem; font-size: .82rem; color: var(--mute
 /* ── DIVIDER ── */
 .divider { border: none; height: 1px; margin: 0; background: var(--divider); }
 
+/* ── SCROLL FADE-IN ── */
+section, .neu-card, .tag {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+section.in-view, .neu-card.in-view, .tag.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── ACTIVE NAV LINK ── */
+nav a.active { color: var(--accent); box-shadow: var(--raise-sm); }
+
+/* ── SCROLL-TO-TOP ── */
+.scroll-top {
+  position: fixed; bottom: 1.8rem; left: 1.8rem; z-index: 200;
+  width: 42px; height: 42px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  background: var(--surface); color: var(--muted);
+  box-shadow: var(--raise-sm); border: 1px solid var(--border);
+  cursor: pointer; font-family: inherit;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s, box-shadow .2s, color .2s;
+}
+.scroll-top.visible { opacity: 1; pointer-events: all; }
+.scroll-top:hover { color: var(--accent); box-shadow: var(--inset); }
+
 /* ── THEME TOGGLE ── */
 .theme-toggle {
   position: fixed; bottom: 1.8rem; right: 1.8rem; z-index: 200;
