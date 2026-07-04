@@ -10,6 +10,9 @@ CORS(app)
 
 MESSAGES_FILE = os.path.join(os.path.dirname(__file__), "messages.json")
 
+# Admin key for reading submissions. Empty = nobody can read (fail closed).
+ADMIN_KEY = os.environ.get("ADMIN_KEY", "")
+
 
 def _load():
     if not os.path.exists(MESSAGES_FILE):
@@ -50,6 +53,9 @@ def post_message():
 
 @app.get("/api/messages")
 def get_messages():
+    key = request.args.get("key", "")
+    if not ADMIN_KEY or key != ADMIN_KEY:
+        return jsonify({"error": "unauthorized"}), 401
     return jsonify(_load())
 
 

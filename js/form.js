@@ -1,5 +1,5 @@
-// Local dev: Flask backend. GitHub Pages: swap to your Formspree URL.
-const BACKEND_URL = 'http://localhost:8080/api/messages';
+// Posts to the Flask backend via nginx reverse proxy (relative path).
+const BACKEND_URL = '/api/messages';
 
 // ── Contact form ──
 document.getElementById('msgForm').addEventListener('submit', async (e) => {
@@ -42,12 +42,13 @@ document.getElementById('msgForm').addEventListener('submit', async (e) => {
   }
 });
 
-// ── Admin inbox (?admin=1) ──
-if (new URLSearchParams(location.search).get('admin') === '1') {
+// ── Admin inbox (?key=...) ──
+const adminKey = new URLSearchParams(location.search).get('key');
+if (adminKey) {
   const section = document.getElementById('messages');
   section.classList.add('visible');
 
-  fetch(BACKEND_URL)
+  fetch(`${BACKEND_URL}?key=${encodeURIComponent(adminKey)}`)
     .then(r => r.json())
     .then(msgs => {
       const list = document.getElementById('msgList');
