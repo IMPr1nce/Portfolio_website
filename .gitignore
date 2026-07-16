@@ -1,1 +1,31 @@
-/.DS_Store
+# ── Secrets / environment ──
+# Never commit keys (e.g. ADMIN_KEY) or credentials
+.env
+.env.*
+*.env
+!.env.example
+secrets.json
+*.key
+*.pem
+
+# ── Visitor data / runtime output (PII) ──
+# Contact-form submissions contain names + emails — keep them local
+messages.json
+
+# ── Python ──
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+ENV/
+
+# ── OS / editor junk ──
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ── Claude Code session data ──
+.claude/
