@@ -2,11 +2,10 @@ import json
 import os
 from datetime import datetime, timezone
 from flask import Flask, request, jsonify
-from flask_cors import CORS
 
-
+# No CORS: nginx serves the frontend and proxies /api/ on the same origin,
+# so cross-origin access is neither needed nor desirable.
 app = Flask(__name__)
-CORS(app)
 
 MESSAGES_FILE = os.path.join(os.path.dirname(__file__), "messages.json")
 
@@ -28,7 +27,8 @@ def _save(data):
 
 @app.post("/api/messages")
 def post_message():
-    body = request.get_json(silent=True) or {}
+    # Accept JSON (fetch) or form-encoded (no-JS native form submit).
+    body = request.get_json(silent=True) or request.form or {}
     name = (body.get("name") or "").strip()
     email = (body.get("email") or "").strip()
     message = (body.get("message") or "").strip()

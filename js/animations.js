@@ -31,3 +31,6 @@ window.addEventListener('scroll', () => {
   topBtn.classList.toggle('visible', window.scrollY > 400);
 });
 topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// Setup succeeded — cancel the <head> failsafe that would reveal everything.
+clearTimeout(window.__animFailsafe);

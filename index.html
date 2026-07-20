@@ -7,6 +7,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/themes.css" />
   <link rel="stylesheet" href="css/base.css" />
+  <script>
+    // Only hide content for the scroll animation if it can actually run.
+    // No JS / old browser => nothing is ever hidden. Failsafe reveals
+    // everything if animations.js fails to load (cleared at its end).
+    if ('IntersectionObserver' in window &&
+        !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('js-anim');
+      window.__animFailsafe = setTimeout(function () {
+        document.documentElement.classList.remove('js-anim');
+      }, 2000);
+    }
+  </script>
 </head>
 <body>
 
@@ -33,8 +45,8 @@
     </p>
     <div class="hero-links">
       <a class="btn btn-primary" href="mailto:ppatel9114@gmail.com">✉ Get in touch</a>
-      <a class="btn" href="https://github.com" target="_blank">GitHub</a>
-      <a class="btn" href="https://linkedin.com" target="_blank">LinkedIn</a>
+      <a class="btn" href="https://github.com/IMPr1nce" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/ppatel9114/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     </div>
   </div>
 </section>
@@ -193,7 +205,7 @@
     <div class="proj-grid">
 
       <div class="proj-card neu-card">
-        <h3>Rowdy Experience</h3>
+        <h3><a href="https://github.com/IMPr1nce/UTSA-Rowdy-Experience" target="_blank" rel="noopener noreferrer">Rowdy Experience ↗</a></h3>
         <p>Android app to boost UTSA student engagement via interactive checklists and a badge/trophy reward system across Food, Sports, Nightlife, and Activities categories.</p>
         <div class="proj-tags">
           <span class="proj-tag">Java</span>
@@ -203,7 +215,7 @@
       </div>
 
       <div class="proj-card neu-card">
-        <h3>Cache &amp; Virtual Memory Simulator</h3>
+        <h3><a href="https://github.com/IMPr1nce/Cache-and-Virtual-Memory-Simulation" target="_blank" rel="noopener noreferrer">Cache &amp; Virtual Memory Simulator ↗</a></h3>
         <p>Python simulator implementing FIFO/LRU cache replacement policies and virtual-to-physical memory translation with multi-process support. Generates detailed hit/miss, CPI, and utilization reports.</p>
         <div class="proj-tags">
           <span class="proj-tag">Python</span>
@@ -212,7 +224,7 @@
       </div>
 
       <div class="proj-card neu-card">
-        <h3>Blackjack Game</h3>
+        <h3><a href="https://github.com/IMPr1nce/BlackJack" target="_blank" rel="noopener noreferrer">Blackjack Game ↗</a></h3>
         <p>Fully-featured Blackjack game in C with file-based save/resume, dealer AI, and modular design for structured gameplay management.</p>
         <div class="proj-tags">
           <span class="proj-tag">C</span>
@@ -234,8 +246,8 @@
     <div class="contact-links">
       <a class="btn btn-primary" href="mailto:ppatel9114@gmail.com">ppatel9114@gmail.com</a>
       <a class="btn" href="tel:3605837957">(360) 583-7957</a>
-      <a class="btn" href="https://github.com" target="_blank">GitHub</a>
-      <a class="btn" href="https://linkedin.com" target="_blank">LinkedIn</a>
+      <a class="btn" href="https://github.com/IMPr1nce" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/ppatel9114/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     </div>
   </div>
 </section>
@@ -252,7 +264,7 @@
       I read every message.
     </p>
     <form class="msg-form" id="msgForm"
-          action="https://formspree.io/f/YOUR_FORM_ID"
+          action="/api/messages"
           method="POST">
       <div class="msg-row">
         <input type="text"  name="name"    placeholder="Your name *"  required maxlength="100" />
