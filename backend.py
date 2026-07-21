@@ -1,0 +1,63 @@
+import json
+import os
+from datetime import datetime, timezone
+from flask import Flask, request, jsonify
+
+# No CORS: nginx serves the frontend and proxies /api/ on the same origin,
+# so cross-origin access is neither needed nor desirable.
+app = Flask(__name__)
+
+MESSAGES_FILE = os.path.join(os.path.dirname(__file__), "messages.json")
+
+# Admin key for reading submissions. Empty = nobody can read (fail closed).
+ADMIN_KEY = os.environ.get("ADMIN_KEY", "")
+
+
+def _load():
+    if not os.path.exists(MESSAGES_FILE):
+        return []
+    with open(MESSAGES_FILE) as f:
+        return json.load(f)
+
+
+def _save(data):
+    with open(MESSAGES_FILE, "w") as f:
+        json.dump(data, f, indent=2)
+
+
+@app.post("/api/messages")
+def post_message():
+    # Accept JSON (fetch) or form-encoded (no-JS native form submit).
+    body = request.get_json(silent=True) or request.form or {}
+    name = (body.get("name") or "").strip()
+    email = (body.get("email") or "").strip()
+    message = (body.get("message") or "").strip()
+
+    if not name or not message:
+        return jsonify({"error": "name and message are required"}), 400
+    if len(message) > 2000:
+        return jsonify({"error": "message too long (max 2000 chars)"}), 400
+
+    entry = {
+        "id": datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S%f"),
+        "name": name,
+        "email": email,
+        "message": message,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+    }
+    messages = _load()
+    messages.append(entry)
+    _save(messages)
+    return jsonify({"ok": True}), 201
+
+
+@app.get("/api/messages")
+def get_messages():
+    key = request.args.get("key", "")
+    if not ADMIN_KEY or key != ADMIN_KEY:
+        return jsonify({"error": "unauthorized"}), 401
+    return jsonify(_load())
+
+
+if __name__ == "__main__":
+    app.run(port=8080, debug=True)
