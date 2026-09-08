@@ -1,5 +1,5 @@
-// Posts to the Flask backend via nginx reverse proxy (relative path).
-const BACKEND_URL = '/api/messages';
+// Local dev: Flask backend running on port 8080 (see backend.py / run.sh).
+const BACKEND_URL = 'http://localhost:8080/api/messages';
 
 // ── Contact form ──
 document.getElementById('msgForm').addEventListener('submit', async (e) => {
@@ -42,13 +42,12 @@ document.getElementById('msgForm').addEventListener('submit', async (e) => {
   }
 });
 
-// ── Admin inbox (?key=...) ──
-const adminKey = new URLSearchParams(location.search).get('key');
-if (adminKey) {
+// ── Admin inbox (?admin=1) ──
+if (new URLSearchParams(location.search).get('admin') === '1') {
   const section = document.getElementById('messages');
   section.classList.add('visible');
 
-  fetch(`${BACKEND_URL}?key=${encodeURIComponent(adminKey)}`)
+  fetch(BACKEND_URL)
     .then(r => r.json())
     .then(msgs => {
       const list = document.getElementById('msgList');
