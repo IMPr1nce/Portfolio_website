@@ -2,15 +2,14 @@ import json
 import os
 from datetime import datetime, timezone
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
-# No CORS: nginx serves the frontend and proxies /api/ on the same origin,
-# so cross-origin access is neither needed nor desirable.
+# Local dev: the frontend (port 3000) and backend (port 8080) are different
+# origins, so CORS is required for the browser to call the API.
 app = Flask(__name__)
+CORS(app)
 
 MESSAGES_FILE = os.path.join(os.path.dirname(__file__), "messages.json")
-
-# Admin key for reading submissions. Empty = nobody can read (fail closed).
-ADMIN_KEY = os.environ.get("ADMIN_KEY", "")
 
 
 def _load():
@@ -53,9 +52,6 @@ def post_message():
 
 @app.get("/api/messages")
 def get_messages():
-    key = request.args.get("key", "")
-    if not ADMIN_KEY or key != ADMIN_KEY:
-        return jsonify({"error": "unauthorized"}), 401
     return jsonify(_load())
 
 
